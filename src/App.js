@@ -31,11 +31,31 @@ class App extends Component {
 
     this.state = {
       input: '',
-      imageURL: ''
+      imageURL: '',
+      box: {}
     }
   }
 
 
+
+calculateFaceLocation = (data) => {
+  const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+  console.log(clarifaiFace);
+  const image = document.getElementById('inputImage');
+  const width = Number(image.width);
+  const height = Number(image.height);
+  return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+  }
+}
+
+displayFaceBox = (box) => {
+  this.setState({ box: box})
+  console.log(this.state.box);
+}
 
   onInputChange = (event) => {
     this.setState({ 
@@ -45,9 +65,9 @@ class App extends Component {
 
   onBtnSubmit = () => {
     this.setState({imageURL: this.state.input});
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, 'https://www.raaskalderij.be/wp-content/uploads/lachende-mensen.jpg?w=640')
-    .then((res) => console.log(res.outputs[0].data.regions[0].region_info.bounding_box))
-    .catch(() => console.log('Something not okay'))
+    app.models.predict(Clarifai.FACE_DETECT_MODEL, `${ this.state.input }`)
+    .then((res) => this.displayFaceBox(this.calculateFaceLocation(res)))
+    .catch((err) => console.log(err))
   }
 
   render() {
@@ -63,7 +83,7 @@ class App extends Component {
        <ImgLinkForm 
             onInputChange={ this.onInputChange }
             onBtnSubmit={ this.onBtnSubmit } /> 
-       <FaceRecognition imageURL={ this.state.imageURL } />
+       <FaceRecognition imageURL={ this.state.imageURL } box={ this.state.box } />
       </div>
     );
   }
