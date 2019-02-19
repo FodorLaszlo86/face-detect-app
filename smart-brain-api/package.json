@@ -1,0 +1,26 @@
+{
+  "name": "smart-brain-api",
+  "version": "1.0.0",
+  "description": "api for the face detection app ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FodorLaszlo86/face-detect-app.git"
+  },
+  "author": "Laszlo Fodor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FodorLaszlo86/face-detect-app/issues"
+  },
+  "homepage": "https://github.com/FodorLaszlo86/face-detect-app#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
