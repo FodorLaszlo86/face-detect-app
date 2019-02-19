@@ -8,21 +8,24 @@ const dataBase = [
         id: '1',
         name: 'Kate',
         email: 'kate@gmail.com',
-        password: 'puppydog'
+        password: 'puppydog',
+        entries: 0
     },
 
     {
         id: '2',
         name: 'Bill',
         email: 'billy@gmail.com',
-        password: 't-rex'
+        password: 't-rex',
+        entries: 0
     },
 
     {
         id: '3',
         name: 'Ondria',
         email: 'ondria@gmail.com',
-        password: 'shoesandtatoos'
+        password: 'shoesandtatoos',
+        entries: 0
     }
 ]
 
@@ -61,6 +64,22 @@ app.get('/profile/:id', (req, res) => {
         if(user.id === id) {
             found = true;
             return res.json(user);
+        }
+    })
+    if(found === false) {
+        return res.status(400).json('User Not Found')
+    }
+})
+
+
+app.put('/image', (req, res) => {
+    const { id } = req.body;
+    let found = false;
+    dataBase.forEach(user => {
+        if(user.id === id) {
+            found = true;
+            user.entries++;
+            return res.json(user.entries);
         }
     })
     if(found === false) {
