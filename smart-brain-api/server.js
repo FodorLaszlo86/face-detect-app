@@ -39,12 +39,13 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', (req, res) => {
-    if( req.body.email === dataBase[0].email 
-        && req.body.password === dataBase[0].password) {
-        res.json('You successfully signed in');
-    } else {
-        res.status(400).json('Failed Signin')
-    }
+    dataBase.forEach(user => {
+        if (req.body.email === user.email && req.body.password === user.password) {
+                res.json('You successfully signed in');
+        }  else {
+            res.status(400).json('Failed Signin')
+        }
+    })
 })
 
 
@@ -78,7 +79,7 @@ app.get('/profile/:id', (req, res) => {
 })
 
 
-app.put('/image', (req, res) => {
+app.post('/image', (req, res) => {
     const { id } = req.body;
     let found = false;
     dataBase.forEach(user => {

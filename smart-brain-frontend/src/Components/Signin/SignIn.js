@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +12,7 @@ class SignIn extends Component {
     }
     
     onEmailChange = (event) => {
+        
         this.setState({ signInEmail: event.target.value })
     }
 
@@ -28,8 +30,10 @@ class SignIn extends Component {
             })
         })
         .then(response => response.json())
-        .then(data => {
-            if(data === 'You successfully signed in') {
+        .then(user => {
+            console.log(user);
+            if(user === 'You successfully signed in') {
+                this.props.loadUser(user);
                 this.props.onRouteChange('home')
             } else {
                 console.log('Unsuccessful sign in')
@@ -40,6 +44,7 @@ class SignIn extends Component {
 
     render () {
         const { onRouteChange } = this.props;
+        console.log(this.props)
         return (
             <article className="br3 pa2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
                 <main className="pa4 black-80">
