@@ -42,24 +42,24 @@ class App extends Component {
 
 
 
-calculateFaceLocation = (data) => {
-  const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
-  console.log(clarifaiFace);
-  const image = document.getElementById('inputImage');
-  const width = Number(image.width);
-  const height = Number(image.height);
-  return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
+  calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    console.log(clarifaiFace);
+    const image = document.getElementById('inputImage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return {
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - (clarifaiFace.right_col * width),
+        bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
   }
-}
 
-displayFaceBox = (box) => {
-  this.setState({ box: box})
-  console.log(this.state.box);
-}
+  displayFaceBox = (box) => {
+    this.setState({ box: box})
+    console.log(this.state.box);
+  }
 
   onInputChange = (event) => {
     this.setState({ 

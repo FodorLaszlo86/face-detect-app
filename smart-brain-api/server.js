@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
+const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 const dataBase = [
     {
@@ -31,13 +32,14 @@ const dataBase = [
 
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send(dataBase);
 })
 
 app.post('/signin', (req, res) => {
-    if((req.body.name === dataBase[0].name && req.body.email === dataBase[0].email) 
+    if( req.body.email === dataBase[0].email 
         && req.body.password === dataBase[0].password) {
         res.json('You successfully signed in');
     } else {
@@ -48,6 +50,10 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
     const { name, email, password } = req.body;
+    bcrypt.hash(password, null, null, (err, hash) => {
+        // Store hash in your password DB.
+        console.log(hash);
+      });
     dataBase.push({
         name: name,
         email: email,
